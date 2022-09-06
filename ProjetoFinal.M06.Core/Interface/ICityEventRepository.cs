@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjetoFinal.M06.Core.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,5 +9,16 @@ namespace ProjetoFinal.M06.Core.Interface
 {
     public interface ICityEventRepository
     {
+        public List<CityEvent> GetAllEvents();
+
+        public CityEvent GetIdEvent(long idEvent);
+
+        public List<CityEvent> GetTitleEvent(string title);
+
+        public bool InsertNewEvent(CityEvent cityEvent);
+
+        public bool ChangeEvent(long idEvent, CityEvent cityEvent);
+
+        public bool DeleteEvent(long idEvent);
     }
 }
