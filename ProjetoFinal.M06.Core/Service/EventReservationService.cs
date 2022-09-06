@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoFinal.M06.Core.Service
 {
-    internal class EventReservationService
+    public class EventReservationService
     {
     }
 }

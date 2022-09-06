@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoFinal.M06.Core.Interface
 {
-    internal interface ICityEventRepository
+    public interface ICityEventRepository
     {
     }
 }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjetoFinal.M06.Infra.Data.CityEvent
+namespace ProjetoFinal.M06.Infra.Data.Repository
 {
-    internal class CityEventRepository
+    public class CityEventRepository
     {
     }
 }

@@ -15,6 +15,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ProjetoFinal.M06.Core\ProjetoFinal.M06.Core.csproj" />
+    <ProjectReference Include="..\ProjetoFinal.M06.Infra.Data\ProjetoFinal.M06.Infra.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>
