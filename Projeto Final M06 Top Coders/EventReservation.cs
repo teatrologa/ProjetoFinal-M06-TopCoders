@@ -1,4 +1,4 @@
-﻿namespace Projeto_Final_M06_Top_Coders
+﻿namespace ProjetoFinal.M06
 {
     public class EventReservation
     {

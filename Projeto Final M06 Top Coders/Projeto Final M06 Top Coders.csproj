@@ -4,7 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>Projeto_Final_M06_Top_Coders</RootNamespace>
+    <RootNamespace>ProjetoFinal.M06</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
