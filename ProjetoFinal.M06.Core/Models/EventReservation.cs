@@ -1,4 +1,4 @@
-﻿namespace ProjetoFinal.M06
+﻿namespace ProjetoFinal.M06.Core.Models
 {
     public class EventReservation
     {
