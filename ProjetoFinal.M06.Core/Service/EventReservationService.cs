@@ -10,7 +10,7 @@ namespace ProjetoFinal.M06.Core.Service
 {
     public class EventReservationService : IEventReservationService
     {
-        private readonly IEventReservationRepository _eventReservationRepository;
+        public IEventReservationRepository _eventReservationRepository;
         public EventReservationService(IEventReservationRepository eventReservationRepository)
         {
             _eventReservationRepository = eventReservationRepository;

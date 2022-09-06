@@ -5,7 +5,7 @@ namespace ProjetoFinal.M06.Core.Service
 {
     public class CityEventService : ICityEventService
     {
-        private readonly ICityEventRepository _cityEventRepository;
+        public ICityEventRepository _cityEventRepository;
         public CityEventService(ICityEventRepository cityEventRepository)
         {
             _cityEventRepository = cityEventRepository;
