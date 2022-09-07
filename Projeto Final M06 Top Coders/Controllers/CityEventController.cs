@@ -57,5 +57,47 @@ namespace ProjetoFinal.M06.Controllers
             return Ok(titleEvent);
         }
 
+        [HttpPost("/Events/New")]
+        [ProducesResponseType(StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status409Conflict)]
+        public ActionResult<CityEvent> InsertNewEvent(CityEvent cityEvent)
+        {
+            //verificar como usar "conflito" quando o evento já existir.
+            if (!_cityEventService.InsertNewEvent(cityEvent))
+            {
+                return BadRequest();
+            }
+            return CreatedAtAction(nameof(InsertNewEvent), cityEvent);
+        }
+
+        [HttpPut("/Events/Update")]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult ChangeEvent(long idEvent, CityEvent cityEvent)
+        {
+            if(!_cityEventService.ChangeEvent(idEvent, cityEvent))
+            {
+                return NotFound();
+            }
+            _cityEventService.ChangeEvent(idEvent, cityEvent);
+            return Accepted(cityEvent);
+        }
+
+        [HttpDelete("/Events/Delete")]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult DeleteEvent(long idEvent)
+        {
+            if (!_cityEventService.DeleteEvent(idEvent))
+            {
+                return NotFound();
+            }
+            _cityEventService.DeleteEvent(idEvent);
+            return NoContent();
+        }
+
     }
 }
