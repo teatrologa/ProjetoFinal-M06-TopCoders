@@ -71,7 +71,7 @@ namespace ProjetoFinal.M06.Controllers
             return CreatedAtAction(nameof(InsertNewEvent), cityEvent);
         }
 
-        [HttpPut("/Events/Update")]
+        [HttpPut("/Events/{idEvent}/Update")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -85,7 +85,7 @@ namespace ProjetoFinal.M06.Controllers
             return Accepted(cityEvent);
         }
 
-        [HttpDelete("/Events/Delete")]
+        [HttpDelete("/Events/{idEvent}/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
