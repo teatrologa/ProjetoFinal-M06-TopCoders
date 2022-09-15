@@ -28,7 +28,12 @@ namespace ProjetoFinal.M06.Core.Service
 
         public bool ChangeEvent(long idEvent, CityEvent cityEvent) { return _cityEventRepository.ChangeEvent(idEvent, cityEvent); }
 
-        public bool DeleteEvent(long idEvent) { return _cityEventRepository.DeleteEvent(idEvent); }
+        public bool DeleteEvent(long idEvent) 
+        { 
+            return _cityEventRepository.DeleteEvent(idEvent); 
+        }
+
+        public bool IsThereAnyReservation(long idEvent) { return _cityEventRepository.IsThereAnyReservation(idEvent); }
 
     }
 }

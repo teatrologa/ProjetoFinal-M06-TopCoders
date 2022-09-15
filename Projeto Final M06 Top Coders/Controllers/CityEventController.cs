@@ -130,15 +130,34 @@ namespace ProjetoFinal.M06.Controllers
 
         [HttpDelete("/Events/{idEvent}/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult DeleteEvent(long idEvent)
         {
-            if (!_cityEventService.DeleteEvent(idEvent))
+            if (_cityEventService.GetIdEvent(idEvent) != null)
             {
-                return NotFound();
+                if (_cityEventService.IsThereAnyReservation(idEvent))
+                {
+                    var selEvent = _cityEventService.GetIdEvent(idEvent);
+                    selEvent.Status = false;
+                    _cityEventService.ChangeEvent(idEvent, selEvent);
+                    return Accepted();
+                }
+                else
+                {
+                    _cityEventService.DeleteEvent(idEvent);
+                    return NoContent();
+                }
             }
-            _cityEventService.DeleteEvent(idEvent);
+            
+            
+            
+            //if (!_cityEventService.DeleteEvent(idEvent))
+            //{
+            //    return NotFound();
+            //}
+            //_cityEventService.DeleteEvent(idEvent);
             return NoContent();
         }
 

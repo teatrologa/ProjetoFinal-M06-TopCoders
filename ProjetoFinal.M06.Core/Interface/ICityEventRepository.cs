@@ -24,5 +24,7 @@ namespace ProjetoFinal.M06.Core.Interface
         public bool ChangeEvent(long idEvent, CityEvent cityEvent);
 
         public bool DeleteEvent(long idEvent);
+
+        public bool IsThereAnyReservation(long idEvent);
     }
 }

@@ -146,5 +146,23 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
             return conn.Execute(query, parameters) == 1;
         }
+
+        public bool IsThereAnyReservation(long idEvent)
+        {
+            var query = "SELECT * FROM EventReservation WHERE (idEvent = @idEvent) and quantity > 0";
+
+            var parameters = new DynamicParameters(new { idEvent });
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            var listEvent = conn.Query<CityEvent>(query, parameters).ToList();
+
+            if (listEvent.Count > 0)
+            {
+                return true;
+            }
+            return false;
+        }
+
     }
 }
