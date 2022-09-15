@@ -17,6 +17,8 @@ namespace ProjetoFinal.M06.Core.Service
 
         public List<CityEvent> GetTitleEvent(string title) { return _cityEventRepository.GetTitleEvent(title); }
 
+        public List<CityEvent> GetLocalDateEvent(string local, DateTime dateHourEvent) { return _cityEventRepository.GetLocalDateEvent(local, dateHourEvent); }
+
         public bool InsertNewEvent(CityEvent cityEvent) { return _cityEventRepository.InsertNewEvent(cityEvent); }
 
         public bool ChangeEvent(long idEvent, CityEvent cityEvent) { return _cityEventRepository.ChangeEvent(idEvent, cityEvent); }

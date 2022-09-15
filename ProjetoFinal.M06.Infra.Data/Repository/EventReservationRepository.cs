@@ -26,7 +26,7 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
         public EventReservation GetIdReservation(long idReservation)
         {
-            var query = "SELECT FROM EventReservation WHERE idReservation = @idReservation";
+            var query = "SELECT * FROM EventReservation WHERE idReservation = @idReservation";
 
             var parameters = new DynamicParameters(new
             {

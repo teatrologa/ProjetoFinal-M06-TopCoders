@@ -39,9 +39,8 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
         public List<CityEvent> GetTitleEvent(string title)
         {
-            //TESTE para pegar varios titulos que contem a palavra passada
 
-            var query = "SELECT * FROM CityEvent WHERE title LIKE %@title%";
+            var query = "SELECT * FROM CityEvent WHERE title LIKE ('%' + @title + '%')";
 
             var parameters = new DynamicParameters(new
             {
@@ -51,11 +50,43 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
 
             return conn.Query<CityEvent>(query, parameters).ToList();
+
+            
+            //FORMA GAMBIARRADA DE FAZER, NÃO FAÇA
+
+            //var query = "SELECT * FROM CityEvent";
+
+            //using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            //var listEvent = conn.Query<CityEvent>(query).ToList();
+
+            //List<CityEvent> eventTitle = (from CityEvent in listEvent where CityEvent.Title.Contains(title) select CityEvent).ToList();
+
+            //return eventTitle;
         }
+
+        public List<CityEvent> GetLocalDateEvent(string local, DateTime dateHourEvent)
+        {
+            dateHourEvent = Convert.ToDateTime(dateHourEvent);
+
+            var query = "SELECT * FROM CityEvent WHERE Local LIKE ('%' + @local + '%') AND DateHourEvent between (@dateHourEvent + '00:00:00.000') and (@dateHourEvent + '23:59:59.000')";
+
+            var parameters = new DynamicParameters(new
+            {
+                local,
+                dateHourEvent,
+            });
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
+        }
+
+
 
         public bool InsertNewEvent (CityEvent cityEvent)
         {
-            var query = "INSERT INTO CityEvent VALUES (@title, @description, @dateHourEvent, @local, @address, @price)";
+            var query = "INSERT INTO CityEvent VALUES (@title, @description, @dateHourEvent, @local, @address, @price, @status)";
 
             var parameters = new DynamicParameters(new
             {
@@ -65,6 +96,7 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                 cityEvent.Local,
                 cityEvent.Address,
                 cityEvent.Price,
+                cityEvent.Status,
             });
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
@@ -76,7 +108,7 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
         {
             var query = @"UPDATE CityEvent SET title = @title, description = @description,
                           dateHourEvent = @dateHourEvent, local = @local, address = @address,
-                             price = @price WHERE idEvent = @idEvent";
+                             price = @price, status = @status WHERE idEvent = @idEvent";
 
             cityEvent.Idevent = idEvent;
 

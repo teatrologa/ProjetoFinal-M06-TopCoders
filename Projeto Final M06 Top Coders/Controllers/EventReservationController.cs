@@ -29,7 +29,7 @@ namespace ProjetoFinal.M06.Controllers
             return NoContent();
         }
 
-        [HttpGet("/Reservations/{idReservation}")]
+        [HttpGet("/Reservations/Id/{idReservation}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,7 +43,7 @@ namespace ProjetoFinal.M06.Controllers
             return Ok(reservation);
         }
 
-        [HttpGet("/Reservations/{personName}")]
+        [HttpGet("/Reservations/Nome/{personName}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
@@ -61,7 +61,7 @@ namespace ProjetoFinal.M06.Controllers
             return Ok(personReservations);
         }
 
-        [HttpGet("/Reservations/{event}")]
+        [HttpGet("/Reservations/Evento/{idEvent}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

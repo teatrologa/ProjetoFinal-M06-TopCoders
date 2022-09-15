@@ -16,5 +16,7 @@ namespace ProjetoFinal.M06.Core.Models
         
         public decimal Price { get; set; }
 
+        public bool Status { get; set; }
+
     }
 }

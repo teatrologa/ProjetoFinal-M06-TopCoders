@@ -29,7 +29,7 @@ namespace ProjetoFinal.M06.Controllers
             return NoContent();
         }
 
-        [HttpGet("/Events/{idEvent}")]
+        [HttpGet("/Events/Id/{idEvent}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -43,8 +43,9 @@ namespace ProjetoFinal.M06.Controllers
             return Ok(eventId);
         }
 
-        [HttpGet("/Events/{title}")]
+        [HttpGet("/Events/Titulo/{title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<CityEvent>> GetTitleEvent(string title)
@@ -53,9 +54,32 @@ namespace ProjetoFinal.M06.Controllers
             if (titleEvent == null)
             {
                 return NotFound();
+            } else if (titleEvent.Any() == false)
+            {
+                return NoContent();
             }
             return Ok(titleEvent);
         }
+
+        [HttpGet("/Events/Local/Date/")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public ActionResult<List<CityEvent>> GetLocalDateEvent(string local, DateTime dateHourEvent)
+        {
+            var selectEvents = _cityEventService.GetLocalDateEvent(local, dateHourEvent);
+            if (selectEvents == null)
+            {
+                return NotFound();
+            }
+            else if (selectEvents.Any() == false)
+            {
+                return NoContent();
+            }
+            return Ok(selectEvents);
+        }
+
 
         [HttpPost("/Events/New")]
         [ProducesResponseType(StatusCodes.Status201Created)]
