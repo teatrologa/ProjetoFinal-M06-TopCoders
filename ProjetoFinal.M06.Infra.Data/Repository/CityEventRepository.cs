@@ -82,7 +82,24 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
             return conn.Query<CityEvent>(query, parameters).ToList();
         }
 
+        public List<CityEvent> GetPriceDateEvent(decimal priceMin, decimal priceMax, DateTime dateHourEvent)
+        {
+            dateHourEvent = Convert.ToDateTime(dateHourEvent);
 
+            var query = "SELECT * FROM CityEvent WHERE (Price BETWEEN (@priceMin) AND (@priceMax)) AND DateHourEvent between (@dateHourEvent + '00:00:00.000') and (@dateHourEvent + '23:59:59.000')";
+
+            var parameters = new DynamicParameters(new
+            {
+                priceMin,
+                priceMax,
+                dateHourEvent,
+            });
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<CityEvent>(query, parameters).ToList();
+
+        }
 
         public bool InsertNewEvent (CityEvent cityEvent)
         {

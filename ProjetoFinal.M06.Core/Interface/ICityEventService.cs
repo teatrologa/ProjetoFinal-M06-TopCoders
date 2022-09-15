@@ -17,6 +17,8 @@ namespace ProjetoFinal.M06.Core.Interface
 
         public List<CityEvent> GetLocalDateEvent(string local, DateTime dateHourEvent);
 
+        public List<CityEvent> GetPriceDateEvent(decimal priceMin, decimal priceMax, DateTime dateHourEvent);
+
         public bool InsertNewEvent(CityEvent cityEvent);
 
         public bool ChangeEvent(long idEvent, CityEvent cityEvent);
