@@ -1,11 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFinal.M06.Core.Interface;
 using ProjetoFinal.M06.Core.Models;
+using ProjetoFinal.M06.Filters;
 
 namespace ProjetoFinal.M06.Controllers
 {
     [ApiController]
     [Route("[controller]")]
+    [Consumes("application/json")]
+    [Produces("application/json")]
+
     public class CityEventController : ControllerBase
     {
         public ICityEventService _cityEventService;
@@ -14,6 +18,7 @@ namespace ProjetoFinal.M06.Controllers
         {
             _cityEventService = cityEventService;
         }
+
 
 
         [HttpGet("/Events/Titulo/{title}")]
@@ -31,6 +36,8 @@ namespace ProjetoFinal.M06.Controllers
             }
             return Ok(titleEvent);
         }
+
+
 
         [HttpGet("/Events/Local/Date/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -53,6 +60,8 @@ namespace ProjetoFinal.M06.Controllers
 
             return Ok(selectEvents);
         }
+
+
 
         [HttpGet("/Events/Price/Date/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -88,13 +97,13 @@ namespace ProjetoFinal.M06.Controllers
         }
 
 
+
         [HttpPost("/Events/New")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
         public ActionResult<CityEvent> InsertNewEvent(CityEvent cityEvent)
         {
-            //verificar como usar "conflito" quando o evento já existir.
             if (!_cityEventService.InsertNewEvent(cityEvent))
             {
                 return BadRequest();
@@ -102,51 +111,45 @@ namespace ProjetoFinal.M06.Controllers
             return CreatedAtAction(nameof(InsertNewEvent), cityEvent);
         }
 
+
+
         [HttpPut("/Events/{idEvent}/Update")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult ChangeEvent(long idEvent, CityEvent cityEvent)
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ServiceFilter(typeof(CheckIdEventActionFilter_CE))]
+        public ActionResult ChangeEvent(long idEvent, [FromBody] CityEvent cityEvent)
         {
             if(!_cityEventService.ChangeEvent(idEvent, cityEvent))
             {
-                return NotFound();
+                return BadRequest("Não foi possível atualizar o evento.");
             }
             _cityEventService.ChangeEvent(idEvent, cityEvent);
             return Accepted(cityEvent);
         }
 
+        
+        
         [HttpDelete("/Events/{idEvent}/DeleteOrDisable")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult DeleteEvent(long idEvent)
+        [ServiceFilter(typeof(CheckIdEventActionFilter_CE))]
+        public ActionResult DeleteorDisableEvent(long idEvent)
         {
-            if (_cityEventService.GetIdEvent(idEvent) != null)
+            if (_cityEventService.IsThereAnyReservation(idEvent))
             {
-                if (_cityEventService.IsThereAnyReservation(idEvent))
-                {
-                    var selEvent = _cityEventService.GetIdEvent(idEvent);
-                    selEvent.Status = false;
-                    _cityEventService.ChangeEvent(idEvent, selEvent);
-                    return Accepted();
-                }
-                else
-                {
-                    _cityEventService.DeleteEvent(idEvent);
-                    return NoContent();
-                }
+                var selEvent = _cityEventService.GetIdEvent(idEvent);
+                selEvent.Status = false;
+                _cityEventService.ChangeEvent(idEvent, selEvent);
+                return Accepted();
             }
-            
-            
-            
-            //if (!_cityEventService.DeleteEvent(idEvent))
-            //{
-            //    return NotFound();
-            //}
-            //_cityEventService.DeleteEvent(idEvent);
-            return NoContent();
+            else
+            {
+                _cityEventService.DeleteEvent(idEvent);
+                return NoContent();
+            }
         }
 
     }

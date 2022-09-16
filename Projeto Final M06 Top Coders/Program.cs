@@ -1,5 +1,6 @@
 using ProjetoFinal.M06.Core.Interface;
 using ProjetoFinal.M06.Core.Service;
+using ProjetoFinal.M06.Filters;
 using ProjetoFinal.M06.Infra.Data.Repository;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -10,6 +11,17 @@ builder.Services.AddScoped<ICityEventRepository, CityEventRepository>();
 builder.Services.AddScoped<IEventReservationService, EventReservationService>();
 builder.Services.AddScoped<ICityEventService, CityEventService>();
 
+//Add filter service
+builder.Services.AddScoped<CheckIdEventActionFilter_ER>();
+builder.Services.AddScoped<CheckIdEventActionFilter_CE>();
+builder.Services.AddScoped<CheckIdReservationActionFilter>();
+
+builder.Services.AddMvc(options =>
+{
+    //aqui você acaba de add um filtro GLOBAL para todas as controllers/metodos, para TUDO.
+    options.Filters.Add<GeneralExceptionFilter>();
+
+});
 
 
 builder.Services.AddControllers();

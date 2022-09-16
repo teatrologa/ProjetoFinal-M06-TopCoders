@@ -13,6 +13,8 @@ namespace ProjetoFinal.M06.Core.Interface
 
         public CityEvent GetIdEvent(long idEvent);
 
+        public bool GetIdEventBool(long idEvent);
+
         public List<CityEvent> GetTitleEvent(string title);
 
         public List<CityEvent> GetLocalDateEvent(string local, DateTime dateHourEvent);

@@ -37,6 +37,21 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
             return conn.QueryFirstOrDefault<CityEvent>(query, parameters);
         }
 
+
+        public bool GetIdEventBool(long idEvent)
+        {
+            var query = "SELECT * FROM CityEvent WHERE idEvent = @idEvent";
+
+            var parameters = new DynamicParameters(new
+            {
+                idEvent,
+            });
+
+            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+
+            return conn.Query<CityEvent>(query, parameters).ToList().Count() == 1;
+        }
+
         public List<CityEvent> GetTitleEvent(string title)
         {
 
@@ -129,7 +144,7 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                           dateHourEvent = @dateHourEvent, local = @local, address = @address,
                              price = @price, status = @status WHERE idEvent = @idEvent";
 
-            cityEvent.Idevent = idEvent;
+            cityEvent.IdEvent = idEvent;
 
             var parameters = new DynamicParameters(cityEvent);
 
