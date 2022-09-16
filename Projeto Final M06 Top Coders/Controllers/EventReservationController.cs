@@ -48,11 +48,11 @@ namespace ProjetoFinal.M06.Controllers
             return CreatedAtAction(nameof(InsertNewReservation), eventReservation);
         }
 
-        [HttpPut("/Reservations/{idReservation}/Update")]
+        [HttpPatch("/Reservations/{idReservation}/Update")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult ChangeReservation(long idReservation, EventReservation eventReservation)
+        public ActionResult ChangeReservation(long idReservation, [FromBody]EventReservation eventReservation)
         {
             if (!_eventReservationService.ChangeReservation(idReservation, eventReservation))
             {

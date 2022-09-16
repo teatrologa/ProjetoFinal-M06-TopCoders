@@ -92,8 +92,7 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
         public bool ChangeReservation(long idReservation, EventReservation eventReservation)
         {
-            var query = @"UPDATE EventReservation SET idEvent = @idEvent,
-                          personName = @personName, quantity = @quantity
+            var query = @"UPDATE EventReservation SET quantity = @quantity
                             WHERE idReservation = @idReservation";
 
             eventReservation.IdReservation = idReservation;
