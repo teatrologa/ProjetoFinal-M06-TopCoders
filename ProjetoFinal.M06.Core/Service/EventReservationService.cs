@@ -25,9 +25,9 @@ namespace ProjetoFinal.M06.Core.Service
             return _eventReservationRepository.GetIdReservation(idReservation);
         }
 
-        public List<EventReservation> GetPersonReservations(string personName) 
+        public List<EventReservation> GetPersonTitleReservation(string personName, string title)
         { 
-            return _eventReservationRepository.GetPersonReservations(personName); 
+            return _eventReservationRepository.GetPersonTitleReservation(personName, title); 
         }
 
         public List<EventReservation> GetEventReservations(long idEvent)

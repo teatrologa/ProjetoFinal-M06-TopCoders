@@ -15,33 +15,6 @@ namespace ProjetoFinal.M06.Controllers
             _cityEventService = cityEventService;
         }
 
-        [HttpGet("/Events")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<List<CityEvent>> GetAllEvents()
-        {
-            var allEvents = _cityEventService.GetAllEvents();
-            if (allEvents.Any() == true)
-            {
-                return Ok(allEvents);
-            }
-            return NoContent();
-        }
-
-        [HttpGet("/Events/Id/{idEvent}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<CityEvent> GetIdEvent(long idEvent)
-        {
-            var eventId = _cityEventService.GetIdEvent(idEvent);
-            if (eventId == null)
-            {
-                return NotFound();
-            }
-            return Ok(eventId);
-        }
 
         [HttpGet("/Events/Titulo/{title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -128,7 +101,7 @@ namespace ProjetoFinal.M06.Controllers
             return Accepted(cityEvent);
         }
 
-        [HttpDelete("/Events/{idEvent}/Delete")]
+        [HttpDelete("/Events/{idEvent}/DeleteOrDisable")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]

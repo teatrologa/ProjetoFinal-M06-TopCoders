@@ -103,6 +103,8 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
         public bool InsertNewEvent (CityEvent cityEvent)
         {
+            cityEvent.Status = true;
+
             var query = "INSERT INTO CityEvent VALUES (@title, @description, @dateHourEvent, @local, @address, @price, @status)";
 
             var parameters = new DynamicParameters(new
@@ -138,7 +140,7 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
         public bool DeleteEvent (long idEvent)
         {
-            var query = "DELETE FROM CityReservation WHERE idEvent = @idEvent";
+            var query = "DELETE FROM CityEvent WHERE idEvent = @idEvent";
 
             var parameters = new DynamicParameters(new { idEvent });
 

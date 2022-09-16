@@ -15,42 +15,14 @@ namespace ProjetoFinal.M06.Controllers
             _eventReservationService = eventReservationService;
         }
 
-        [HttpGet("/Reservations")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<List<CityEvent>> GetAllReservations()
-        {
-            var allReservations = _eventReservationService.GetAllReservations();
-            if (allReservations.Any() == true)
-            {
-                return Ok(allReservations);
-            }
-            return NoContent();
-        }
-
-        [HttpGet("/Reservations/Id/{idReservation}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<EventReservation> GetIdReservation(long idReservation)
-        {
-            var reservation = _eventReservationService.GetIdReservation(idReservation);
-            if (reservation == null)
-            {
-                return NotFound();
-            }
-            return Ok(reservation);
-        }
-
-        [HttpGet("/Reservations/Nome/{personName}")]
+        [HttpGet("/Reservations/Nome/Local")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<List<EventReservation>> GetPersonReservations(string personName)
+        public ActionResult<List<EventReservation>> GetPersonTitleReservation(string personName, string title)
         {
-            var personReservations = _eventReservationService.GetPersonReservations(personName);
+            var personReservations = _eventReservationService.GetPersonTitleReservation(personName, title);
             if (personReservations == null)
             {
                 return NotFound();
@@ -61,23 +33,6 @@ namespace ProjetoFinal.M06.Controllers
             return Ok(personReservations);
         }
 
-        [HttpGet("/Reservations/Evento/{idEvent}")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status204NoContent)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public ActionResult<List<EventReservation>> GetEventReservations(long idEvent)
-        {
-            var eventReservation = _eventReservationService.GetEventReservations(idEvent);
-            if (eventReservation == null)
-            {
-                return NotFound();
-            } else if (eventReservation.Any() == false)
-            {
-                return NoContent();
-            }
-            return Ok(eventReservation);
-        }
 
         [HttpPost("/Reservations/New")]
         [ProducesResponseType(StatusCodes.Status201Created)]

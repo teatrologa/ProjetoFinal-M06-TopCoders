@@ -13,7 +13,7 @@ namespace ProjetoFinal.M06.Core.Interface
 
         public EventReservation GetIdReservation(long idReservation);
 
-        public List<EventReservation> GetPersonReservations(string personName);
+        public List<EventReservation> GetPersonTitleReservation(string personName, string title);
 
         public List<EventReservation> GetEventReservations(long idEvent);
 

@@ -39,13 +39,18 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
         }
 
-        public List<EventReservation> GetPersonReservations(string personName)
+        public List<EventReservation> GetPersonTitleReservation(string personName, string title)
         {
-            var query = "SELECT * FROM EventReservation WHERE personName = @personName";
-            
+            var query = @"SELECT er.idReservation, er.idEvent, er.personName, 
+                            er.Quantity FROM EventReservation AS er
+                            INNER JOIN CityEvent AS ce ON ce.idEvent = er.idEvent 
+                            WHERE er.personName LIKE ('%' + @personName + '%')  
+                            AND ce.Title LIKE ('%' + @title + '%')";
+
             var parameters = new DynamicParameters(new
             {
                 personName,
+                title,
             });
 
             using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
