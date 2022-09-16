@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjetoFinal.M06.Core.DTO
 {
-    public class NewEventReservation
+    public class EventReservationResponse
     {
     }
 }

@@ -22,11 +22,14 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<EventReservation>> GetPersonTitleReservation(string personName, string title)
         {
-            var personReservations = _eventReservationService.GetPersonTitleReservation(personName, title);
-            if (personReservations == null)
+            if (personName == null || title == null)
             {
-                return NotFound();
-            }else if (personReservations.Any() == false)
+                return BadRequest("Todos os campos precisam estar preenchidos");
+            }
+            
+            var personReservations = _eventReservationService.GetPersonTitleReservation(personName, title);
+            
+            if (personReservations.Any() == false)
             {
                 return NoContent();
             }

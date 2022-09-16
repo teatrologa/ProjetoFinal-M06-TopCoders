@@ -24,10 +24,8 @@ namespace ProjetoFinal.M06.Controllers
         public ActionResult<List<CityEvent>> GetTitleEvent(string title)
         {
             var titleEvent = _cityEventService.GetTitleEvent(title);
-            if (titleEvent == null)
-            {
-                return NotFound();
-            } else if (titleEvent.Any() == false)
+
+            if (titleEvent.Any() == false)
             {
                 return NoContent();
             }
@@ -41,15 +39,18 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<CityEvent>> GetLocalDateEvent(string local, DateTime dateHourEvent)
         {
-            var selectEvents = _cityEventService.GetLocalDateEvent(local, dateHourEvent);
-            if (selectEvents == null)
+            if (dateHourEvent.Year < 1753 || dateHourEvent.Year > 9999)
             {
-                return NotFound();
+                return BadRequest("A data está no formato errado, favor inserir um valor entre os anos de 1753 e 9999");
             }
-            else if (selectEvents.Any() == false)
+
+            var selectEvents = _cityEventService.GetLocalDateEvent(local, dateHourEvent);
+
+            if (selectEvents.Any() == false)
             {
                 return NoContent();
             }
+
             return Ok(selectEvents);
         }
 
@@ -60,15 +61,29 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public ActionResult<List<CityEvent>> GetPriceDateEvent(decimal priceMin, decimal priceMax, DateTime dateHourEvent)
         {
-            var selectEvents = _cityEventService.GetPriceDateEvent(priceMin, priceMax, dateHourEvent);
-            if (selectEvents == null)
+            if (priceMin < 0 || priceMax < 0)
             {
-                return NotFound();
+                return BadRequest("Insira os preços no valores correto de 0 para cima.");
+            } else if (priceMin > priceMax)
+            {
+                return BadRequest("Insira os valores nos locais corretos, o preço máximo sempre será superior ao minimo");
+            } else if (priceMin == priceMax)
+            {
+                return BadRequest("Sinto muito, os valores min e max não podem ser iguais. Escolha outro range.");
             }
-            else if (selectEvents.Any() == false)
+
+            if (dateHourEvent.Year < 1753 || dateHourEvent.Year > 9999)
+            {
+                return BadRequest("A data está no formato errado, favor inserir um valor entre os anos de 1753 e 9999");
+            }
+
+            var selectEvents = _cityEventService.GetPriceDateEvent(priceMin, priceMax, dateHourEvent);
+
+            if (selectEvents.Any() == false)
             {
                 return NoContent();
             }
+
             return Ok(selectEvents);
         }
 

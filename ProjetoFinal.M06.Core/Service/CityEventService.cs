@@ -35,5 +35,6 @@ namespace ProjetoFinal.M06.Core.Service
 
         public bool IsThereAnyReservation(long idEvent) { return _cityEventRepository.IsThereAnyReservation(idEvent); }
 
+
     }
 }
