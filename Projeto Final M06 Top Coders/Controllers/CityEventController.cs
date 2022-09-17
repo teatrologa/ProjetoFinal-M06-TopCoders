@@ -22,7 +22,6 @@ namespace ProjetoFinal.M06.Controllers
         }
 
 
-
         [HttpGet("/Events/Titulo/{title}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -40,7 +39,6 @@ namespace ProjetoFinal.M06.Controllers
             }
             return Ok(titleEvent);
         }
-
 
 
         [HttpGet("/Events/Local/Date/")]
@@ -65,7 +63,6 @@ namespace ProjetoFinal.M06.Controllers
         }
 
 
-
         [HttpGet("/Events/Price/Date/")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -88,7 +85,6 @@ namespace ProjetoFinal.M06.Controllers
         }
 
 
-
         [HttpPost("/Events/New")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -105,7 +101,6 @@ namespace ProjetoFinal.M06.Controllers
             }
             return CreatedAtAction(nameof(InsertNewEvent), cityEvent);
         }
-
 
 
         [HttpPut("/Events/{idEvent}/Update")]
@@ -127,7 +122,6 @@ namespace ProjetoFinal.M06.Controllers
             return Accepted(cityEvent);
         }
 
-        
         
         [HttpDelete("/Events/{idEvent}/DeleteOrDisable")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]

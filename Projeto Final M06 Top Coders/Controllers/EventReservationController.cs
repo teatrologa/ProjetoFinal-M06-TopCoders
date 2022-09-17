@@ -15,10 +15,12 @@ namespace ProjetoFinal.M06.Controllers
     public class EventReservationController : ControllerBase
     {
         public IEventReservationService _eventReservationService;
+
         public EventReservationController(IEventReservationService eventReservationService)
         {
             _eventReservationService = eventReservationService;
         }
+
 
         [HttpGet("/Reservations/Nome/Local")]
         [ProducesResponseType(StatusCodes.Status200OK)]
@@ -76,6 +78,7 @@ namespace ProjetoFinal.M06.Controllers
             
             return Accepted(reservation);
         }
+
 
         [HttpDelete("/Reservations/{idReservation}/Delete")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
