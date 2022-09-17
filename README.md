@@ -1,4 +1,4 @@
-# Projeto Final M06 TopCoders - COnstrução de API - API de Eventos
+# Projeto Final M06 TopCoders - Construção de API - API de Eventos
 ### Enunciado do Projeto
 
 Construa uma API que registre e manipule eventos que acontecem na cidade, como shows, peças de teatro, eventos especiais em restaurantes, entre outros.
