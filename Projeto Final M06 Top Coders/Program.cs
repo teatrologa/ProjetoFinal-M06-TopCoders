@@ -4,6 +4,7 @@ using Microsoft.OpenApi.Models;
 using ProjetoFinal.M06.Core.Interface;
 using ProjetoFinal.M06.Core.Service;
 using ProjetoFinal.M06.Filters;
+using ProjetoFinal.M06.Infra.Data;
 using ProjetoFinal.M06.Infra.Data.Repository;
 using System.Text;
 
@@ -14,6 +15,7 @@ builder.Services.AddScoped<IEventReservationRepository, EventReservationReposito
 builder.Services.AddScoped<ICityEventRepository, CityEventRepository>();
 builder.Services.AddScoped<IEventReservationService, EventReservationService>();
 builder.Services.AddScoped<ICityEventService, CityEventService>();
+builder.Services.AddScoped<IConnectionDataBase, ConnectionDataBase>();
 
 //Add filter service
 builder.Services.AddScoped<CheckIdEventActionFilter_ER>();
