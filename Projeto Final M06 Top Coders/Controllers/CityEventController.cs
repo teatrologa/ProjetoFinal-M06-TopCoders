@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFinal.M06.Core.Interface;
 using ProjetoFinal.M06.Core.Models;
@@ -9,6 +10,7 @@ namespace ProjetoFinal.M06.Controllers
     [Route("[controller]")]
     [Consumes("application/json")]
     [Produces("application/json")]
+    [Authorize]
 
     public class CityEventController : ControllerBase
     {
@@ -26,6 +28,8 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [AllowAnonymous]
         public ActionResult<List<CityEvent>> GetTitleEvent(string title)
         {
             var titleEvent = _cityEventService.GetTitleEvent(title);
@@ -44,7 +48,9 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckDateActionFilter_CE))]
+        [AllowAnonymous]
         public ActionResult<List<CityEvent>> GetLocalDateEvent(string local, DateTime dateHourEvent)
         {
 
@@ -65,8 +71,10 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckDateActionFilter_CE))]
         [ServiceFilter(typeof(CheckPriceValuesActionFilter_CE))]
+        [AllowAnonymous]
         public ActionResult<List<CityEvent>> GetPriceDateEvent(decimal priceMin, decimal priceMax, DateTime dateHourEvent)
         {
             var selectEvents = _cityEventService.GetPriceDateEvent(priceMin, priceMax, dateHourEvent);
@@ -85,7 +93,10 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckDateActionFilter_CE))]
+        [Authorize(Roles = "admin")]
         public ActionResult<CityEvent> InsertNewEvent(CityEvent cityEvent)
         {
             if (!_cityEventService.InsertNewEvent(cityEvent))
@@ -101,8 +112,11 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckIdEventActionFilter_CE))]
         [ServiceFilter(typeof(CheckDateActionFilter_CE))]
+        [Authorize(Roles = "admin")]
         public ActionResult ChangeEvent(long idEvent, [FromBody] CityEvent cityEvent)
         {
             if(!_cityEventService.ChangeEvent(idEvent, cityEvent))
@@ -120,7 +134,10 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckIdEventActionFilter_CE))]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteorDisableEvent(long idEvent)
         {
             if (_cityEventService.IsThereAnyReservation(idEvent))

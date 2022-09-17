@@ -1,8 +1,10 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ProjetoFinal.M06.Core.Interface;
 using ProjetoFinal.M06.Core.Models;
 using ProjetoFinal.M06.Core.Service;
 using ProjetoFinal.M06.Filters;
+using System.Data;
 
 namespace ProjetoFinal.M06.Controllers
 {
@@ -23,6 +25,9 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+        [Authorize]
         public ActionResult<List<EventReservation>> GetPersonTitleReservation(string personName, string title)
         {
             var personReservations = _eventReservationService.GetPersonTitleReservation(personName, title);
@@ -39,7 +44,10 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckIdEventActionFilter_ER))]
+        [Authorize]
         public ActionResult<EventReservation> InsertNewReservation([FromBody] EventReservation eventReservation)
         {   
             if (!_eventReservationService.InsertNewReservation(eventReservation))
@@ -53,7 +61,10 @@ namespace ProjetoFinal.M06.Controllers
         [HttpPatch("/Reservations/{idReservation}/Update")]
         [ProducesResponseType(StatusCodes.Status202Accepted)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckIdReservationActionFilter))]
+        [Authorize(Roles = "admin")]
         public ActionResult ChangeReservation(long idReservation, [FromBody] EventReservation eventReservation)
         {
             if (!_eventReservationService.ChangeReservation(idReservation, eventReservation))
@@ -70,7 +81,10 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ProducesResponseType(StatusCodes.Status401Unauthorized)]
+        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         [ServiceFilter(typeof(CheckIdReservationActionFilter))]
+        [Authorize(Roles = "admin")]
         public ActionResult DeleteReservation(long idReservation)
         {   
             _eventReservationService.DeleteReservation(idReservation);
