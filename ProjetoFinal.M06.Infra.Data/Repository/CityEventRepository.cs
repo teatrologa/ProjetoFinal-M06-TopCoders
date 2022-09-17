@@ -18,9 +18,16 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
         {
             var query = "SELECT * FROM CityEvent";
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Query<CityEvent>(query).ToList();
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public CityEvent GetIdEvent (long idEvent)
@@ -32,9 +39,16 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                 idEvent,
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.QueryFirstOrDefault<CityEvent>(query, parameters);
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.QueryFirstOrDefault<CityEvent>(query, parameters);
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
 
@@ -47,9 +61,16 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                 idEvent,
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Query<CityEvent>(query, parameters).ToList().Count() == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query, parameters).ToList().Count() == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public List<CityEvent> GetTitleEvent(string title)
@@ -62,11 +83,18 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                 title,
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
 
-            return conn.Query<CityEvent>(query, parameters).ToList();
 
-            
             //FORMA GAMBIARRADA DE FAZER, NÃO FAÇA
 
             //var query = "SELECT * FROM CityEvent";
@@ -92,9 +120,16 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                 dateHourEvent,
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Query<CityEvent>(query, parameters).ToList();
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public List<CityEvent> GetPriceDateEvent(decimal priceMin, decimal priceMax, DateTime dateHourEvent)
@@ -110,10 +145,16 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                 dateHourEvent,
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Query<CityEvent>(query, parameters).ToList();
-
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Query<CityEvent>(query, parameters).ToList();
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public bool InsertNewEvent (CityEvent cityEvent)
@@ -133,9 +174,16 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                 cityEvent.Status,
             });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public bool ChangeEvent (long idEvent, CityEvent cityEvent)
@@ -145,12 +193,18 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
                              price = @price, status = @status WHERE idEvent = @idEvent";
 
             cityEvent.IdEvent = idEvent;
-
             var parameters = new DynamicParameters(cityEvent);
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public bool DeleteEvent (long idEvent)
@@ -159,9 +213,16 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
             var parameters = new DynamicParameters(new { idEvent });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            return conn.Execute(query, parameters) == 1;
+            try
+            {
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                return conn.Execute(query, parameters) == 1;
+            }
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
         public bool IsThereAnyReservation(long idEvent)
@@ -170,15 +231,21 @@ namespace ProjetoFinal.M06.Infra.Data.Repository
 
             var parameters = new DynamicParameters(new { idEvent });
 
-            using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-
-            var listEvent = conn.Query<CityEvent>(query, parameters).ToList();
-
-            if (listEvent.Count > 0)
+            try
             {
-                return true;
+                using var conn = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+                var listEvent = conn.Query<CityEvent>(query, parameters).ToList();
+                if (listEvent.Count > 0)
+                {
+                    return true;
+                }
+                return false;
             }
-            return false;
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"Erro ao comunicar com banco, mensagem {ex.Message}, stack trace {ex.StackTrace}");
+                throw;
+            }
         }
 
     }
