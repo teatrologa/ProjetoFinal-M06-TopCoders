@@ -28,5 +28,9 @@ namespace ProjetoFinal.M06.Core.Interface
         public bool DeleteEvent(long idEvent);
 
         public bool IsThereAnyReservation(long idEvent);
+
+        public bool CheckDateEvent(DateTime dateHourEvent);
+
+        public bool CheckPriceValues(decimal priceMin, decimal priceMax);
     }
 }

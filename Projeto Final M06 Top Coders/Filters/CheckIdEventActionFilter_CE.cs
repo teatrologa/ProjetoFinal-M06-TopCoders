@@ -23,8 +23,8 @@ namespace ProjetoFinal.M06.Filters
                 Detail = @"Não existe nenhum evento com o ID inserido. Revise sua requisição."
             };
 
-            //CityEvent existEvent = (CityEvent)context.ActionArguments["cityEvent"           
-             long idEvent= (long)context.ActionArguments["idEvent"];
+            //CityEvent existEvent = (CityEvent)context.ActionArguments["cityEvent"];           
+            long idEvent= (long)context.ActionArguments["idEvent"];
 
             if (_cityEventService.GetIdEvent(idEvent) == null)
             {

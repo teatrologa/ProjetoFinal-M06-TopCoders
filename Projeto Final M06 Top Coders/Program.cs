@@ -14,6 +14,8 @@ builder.Services.AddScoped<ICityEventService, CityEventService>();
 //Add filter service
 builder.Services.AddScoped<CheckIdEventActionFilter_ER>();
 builder.Services.AddScoped<CheckIdEventActionFilter_CE>();
+builder.Services.AddScoped<CheckDateActionFilter_CE>();
+builder.Services.AddScoped<CheckPriceValuesActionFilter_CE>();
 builder.Services.AddScoped<CheckIdReservationActionFilter>();
 
 builder.Services.AddMvc(options =>

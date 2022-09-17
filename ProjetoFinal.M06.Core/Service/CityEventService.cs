@@ -37,6 +37,33 @@ namespace ProjetoFinal.M06.Core.Service
 
         public bool IsThereAnyReservation(long idEvent) { return _cityEventRepository.IsThereAnyReservation(idEvent); }
 
+        public bool CheckDateEvent (DateTime dateHourEvent)
+        {
+            if (dateHourEvent.Year < 1753 || dateHourEvent.Year > 9999)
+            {
+                return true;
+            }
+            return false;
+        }
+
+        public bool CheckPriceValues (decimal priceMin, decimal priceMax)
+        {
+            if (priceMin < 0 || priceMax < 0)
+            {
+                return true;
+            }
+            else if (priceMin > priceMax)
+            {
+                return true;
+            }
+            else if (priceMin == priceMax)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
 
     }
 }

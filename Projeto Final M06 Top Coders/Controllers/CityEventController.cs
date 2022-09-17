@@ -44,12 +44,9 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ServiceFilter(typeof(CheckDateActionFilter_CE))]
         public ActionResult<List<CityEvent>> GetLocalDateEvent(string local, DateTime dateHourEvent)
         {
-            if (dateHourEvent.Year < 1753 || dateHourEvent.Year > 9999)
-            {
-                return BadRequest("A data está no formato errado, favor inserir um valor entre os anos de 1753 e 9999");
-            }
 
             var selectEvents = _cityEventService.GetLocalDateEvent(local, dateHourEvent);
 
@@ -68,24 +65,10 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        [ServiceFilter(typeof(CheckDateActionFilter_CE))]
+        [ServiceFilter(typeof(CheckPriceValuesActionFilter_CE))]
         public ActionResult<List<CityEvent>> GetPriceDateEvent(decimal priceMin, decimal priceMax, DateTime dateHourEvent)
         {
-            if (priceMin < 0 || priceMax < 0)
-            {
-                return BadRequest("Insira os preços no valores correto de 0 para cima.");
-            } else if (priceMin > priceMax)
-            {
-                return BadRequest("Insira os valores nos locais corretos, o preço máximo sempre será superior ao minimo");
-            } else if (priceMin == priceMax)
-            {
-                return BadRequest("Sinto muito, os valores min e max não podem ser iguais. Escolha outro range.");
-            }
-
-            if (dateHourEvent.Year < 1753 || dateHourEvent.Year > 9999)
-            {
-                return BadRequest("A data está no formato errado, favor inserir um valor entre os anos de 1753 e 9999");
-            }
-
             var selectEvents = _cityEventService.GetPriceDateEvent(priceMin, priceMax, dateHourEvent);
 
             if (selectEvents.Any() == false)
@@ -102,11 +85,12 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status409Conflict)]
+        [ServiceFilter(typeof(CheckDateActionFilter_CE))]
         public ActionResult<CityEvent> InsertNewEvent(CityEvent cityEvent)
         {
             if (!_cityEventService.InsertNewEvent(cityEvent))
             {
-                return BadRequest();
+                return BadRequest("Falha ao criar evento. O campo de 'Title', 'DateHourEvent', 'Local' e 'Status' são obrigatórios, revise sua requisição.");
             }
             return CreatedAtAction(nameof(InsertNewEvent), cityEvent);
         }
@@ -118,6 +102,7 @@ namespace ProjetoFinal.M06.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ServiceFilter(typeof(CheckIdEventActionFilter_CE))]
+        [ServiceFilter(typeof(CheckDateActionFilter_CE))]
         public ActionResult ChangeEvent(long idEvent, [FromBody] CityEvent cityEvent)
         {
             if(!_cityEventService.ChangeEvent(idEvent, cityEvent))
