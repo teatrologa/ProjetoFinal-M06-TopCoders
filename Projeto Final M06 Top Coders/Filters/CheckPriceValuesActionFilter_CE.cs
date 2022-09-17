@@ -18,7 +18,7 @@ namespace ProjetoFinal.M06.Filters
             {
                 Status = 400,
                 Title = "Valores de preço incorretos",
-                Detail = "Insira valores aceitaveis de praço, eles não devem ser nulos nem negativos. " +
+                Detail = "Insira valores aceitaveis de preço, eles não devem ser nulos nem negativos. " +
                 "O preço máximo é sempre superior ao preço minimo e ambos não devem ser iguais."
             };
 

@@ -23,8 +23,8 @@ namespace ProjetoFinal.M06.Filters
             {
                 Status = 404,
                 Title = "IdReservation não encontrado",
-                Detail = @"Não há nenhuma reserva com este ID, lembre-se sempre de que
-                                nossos IDs são sequencias de números positivos maiores que 0."
+                Detail = "Não há nenhuma reserva com este ID, lembre-se sempre de que nossos " +
+                "IDs são sequencias de números positivos maiores que 0."
             };
 
             if (_eventReservationService.GetIdReservation(idReservation) == null)
